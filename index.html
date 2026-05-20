@@ -2,11 +2,13 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>肥挺私房菜</title>
+<title>粤味菜单</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -22,10 +24,11 @@ body{
 }
 
 /* 顶部 */
+
 .header{
     position:sticky;
     top:0;
-    z-index:99;
+    z-index:999;
     background:linear-gradient(135deg,#ffcc70,#ff9f43);
     padding:16px;
     box-shadow:0 2px 10px rgba(0,0,0,.08);
@@ -39,6 +42,7 @@ body{
 }
 
 /* 搜索框 */
+
 .search-box{
     background:#fff;
     border-radius:999px;
@@ -56,6 +60,7 @@ body{
 }
 
 /* 菜品区域 */
+
 .food-container{
     padding:14px 12px 100px;
 }
@@ -70,8 +75,8 @@ body{
 }
 
 .food-img{
-    width:115px;
-    height:115px;
+    width:110px;
+    height:110px;
     object-fit:cover;
     flex-shrink:0;
 }
@@ -85,7 +90,7 @@ body{
 }
 
 .food-name{
-    font-size:18px;
+    font-size:17px;
     font-weight:700;
     margin-bottom:6px;
 }
@@ -93,7 +98,7 @@ body{
 .food-desc{
     font-size:13px;
     color:#777;
-    line-height:1.4;
+    line-height:1.5;
 }
 
 .food-bottom{
@@ -116,20 +121,21 @@ body{
     transform:scale(.96);
 }
 
-/* 悬浮购物车 */
+/* 购物车 */
+
 .cart-btn{
     position:fixed;
     right:16px;
     bottom:26px;
-    width:62px;
-    height:62px;
+    width:64px;
+    height:64px;
     border-radius:50%;
     background:linear-gradient(135deg,#ffb347,#ff7b00);
     display:flex;
     align-items:center;
     justify-content:center;
     color:#fff;
-    font-size:28px;
+    font-size:30px;
     box-shadow:0 6px 18px rgba(0,0,0,.2);
     z-index:999;
 }
@@ -150,7 +156,8 @@ body{
     font-weight:bold;
 }
 
-/* 购物车弹窗 */
+/* 弹窗 */
+
 .cart-popup{
     position:fixed;
     left:0;
@@ -170,16 +177,6 @@ body{
     border-radius:24px 24px 0 0;
     padding:20px;
     overflow-y:auto;
-    animation:up .25s ease;
-}
-
-@keyframes up{
-    from{
-        transform:translateY(100%);
-    }
-    to{
-        transform:translateY(0);
-    }
 }
 
 .cart-title{
@@ -207,13 +204,6 @@ body{
     font-size:12px;
 }
 
-.empty{
-    color:#999;
-    text-align:center;
-    padding:30px 0;
-    font-size:15px;
-}
-
 .close-btn{
     width:100%;
     border:none;
@@ -225,433 +215,56 @@ body{
     margin-top:12px;
 }
 
-@media (max-width:380px){
+.empty{
+    text-align:center;
+    color:#999;
+    padding:30px 0;
+}
+
+/* 手机适配 */
+
+@media(max-width:380px){
 
     .food-img{
-        width:100px;
-        height:100px;
+        width:95px;
+        height:95px;
     }
 
     .food-name{
-        font-size:16px;
+        font-size:15px;
     }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <!-- 顶部 -->
+
 <div class="header">
 
     <div class="shop-title">
-        🍜 肥挺私房菜
+        🍜 粤味菜单
     </div>
 
-    <!-- 搜索框 -->
     <div class="search-box">
         🔍
-        <input type="text" id="searchInput" placeholder="搜索菜品..." onkeyup="searchFood()">
+        <input type="text"
+        id="searchInput"
+        placeholder="搜索菜品..."
+        onkeyup="searchFood()">
     </div>
 
 </div>
 
 <!-- 菜品列表 -->
-<div class="food-container" id="foodContainer">
 
-    <!-- 菜品1 -->
-    <div class="food-card">
+<div class="food-container" id="foodContainer"></div>
 
-        <img class="food-img"
-        src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop">
+<!-- 购物车 -->
 
-        <div class="food-info">
-
-            <div>
-                <div class="food-name">蜜汁叉烧</div>
-
-                <div class="food-desc">
-                    广式经典烧味，甜香入味，肥瘦均匀。
-                </div>
-            </div>
-
-            <div class="food-bottom">
-                <button class="add-btn" onclick="addMenu('蜜汁叉烧')">
-                    添加
-                </button>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- 菜品2 -->
-    <div class="food-card">
-
-        <img class="food-img"
-        src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800&auto=format&fit=crop">
-
-        <div class="food-info">
-
-            <div>
-                <div class="food-name">豉汁蒸排骨</div>
-
-                <div class="food-desc">
-                    豆豉浓香，排骨鲜嫩多汁。
-                </div>
-            </div>
-
-            <div class="food-bottom">
-                <button class="add-btn" onclick="addMenu('豉汁蒸排骨')">
-                    添加
-                </button>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- 菜品3 -->
-    <div class="food-card">
-
-        <img class="food-img"
-        src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=800&auto=format&fit=crop">
-
-        <div class="food-info">
-
-            <div>
-                <div class="food-name">白切鸡</div>
-
-                <div class="food-desc">
-                    皮滑肉嫩，搭配姜葱酱超香。
-                </div>
-            </div>
-
-            <div class="food-bottom">
-                <button class="add-btn" onclick="addMenu('白切鸡')">
-                    添加
-                </button>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- 菜品4 -->
-    <div class="food-card">
-
-        <img class="food-img"
-        src="https://images.unsplash.com/photo-1576402187878-974f70c890a5?q=80&w=800&auto=format&fit=crop">
-
-        <div class="food-info">
-
-            <div>
-                <div class="food-name">艇仔粥</div>
-
-                <div class="food-desc">
-                    广州传统名粥，鲜香顺滑。
-                </div>
-            </div>
-
-            <div class="food-bottom">
-                <button class="add-btn" onclick="addMenu('艇仔粥')">
-                    添加
-                </button>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- 菜品5 -->
-    <div class="food-card">
-
-        <img class="food-img"
-        src="https://upload.wikimedia.org/wikipedia/commons/0/05/Doraemon_200211.jpg">
-
-        <div class="food-info">
-
-            <div>
-                <div class="food-name">流沙奶黄包</div>
-
-                <div class="food-desc">
-                    暂无菜品图，先让哆啦A梦顶班一下～
-                </div>
-            </div>
-
-            <div class="food-bottom">
-                <button class="add-btn" onclick="addMenu('流沙奶黄包')">
-                    添加
-                </button>
-            </div>
-
-        </div>
-
-    </div>
-
-<!-- 菜品6 -->
-<div class="food-card">
-
-    <img class="food-img"
-    src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=800&auto=format&fit=crop">
-
-    <div class="food-info">
-
-        <div>
-            <div class="food-name">广式烧鹅</div>
-
-            <div class="food-desc">
-                皮脆肉嫩，经典粤式烧味代表。
-            </div>
-        </div>
-
-        <div class="food-bottom">
-            <button class="add-btn" onclick="addMenu('广式烧鹅')">
-                添加
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- 菜品7 -->
-<div class="food-card">
-
-    <img class="food-img"
-    src="https://images.unsplash.com/photo-1604908176997-431f2f1b1d1f?q=80&w=800&auto=format&fit=crop">
-
-    <div class="food-info">
-
-        <div>
-            <div class="food-name">虾饺皇</div>
-
-            <div class="food-desc">
-                水晶外皮，鲜虾饱满弹牙。
-            </div>
-        </div>
-
-        <div class="food-bottom">
-            <button class="add-btn" onclick="addMenu('虾饺皇')">
-                添加
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- 菜品8 -->
-<div class="food-card">
-
-    <img class="food-img"
-    src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800&auto=format&fit=crop">
-
-    <div class="food-info">
-
-        <div>
-            <div class="food-name">豉油皇炒面</div>
-
-            <div class="food-desc">
-                面条劲道，豉油香气十足。
-            </div>
-        </div>
-
-        <div class="food-bottom">
-            <button class="add-btn" onclick="addMenu('豉油皇炒面')">
-                添加
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- 菜品9 -->
-<div class="food-card">
-
-    <img class="food-img"
-    src="https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=800&auto=format&fit=crop">
-
-    <div class="food-info">
-
-        <div>
-            <div class="food-name">干炒牛河</div>
-
-            <div class="food-desc">
-                锅气十足，经典茶餐厅必点。
-            </div>
-        </div>
-
-        <div class="food-bottom">
-            <button class="add-btn" onclick="addMenu('干炒牛河')">
-                添加
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- 菜品10 -->
-<div class="food-card">
-
-    <img class="food-img"
-    src="https://upload.wikimedia.org/wikipedia/commons/0/05/Doraemon_200211.jpg">
-
-    <div class="food-info">
-
-        <div>
-            <div class="food-name">陈皮牛肉丸</div>
-
-            <div class="food-desc">
-                暂无图片，哆啦A梦友情代班～
-            </div>
-        </div>
-
-        <div class="food-bottom">
-            <button class="add-btn" onclick="addMenu('陈皮牛肉丸')">
-                添加
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- 菜品11 -->
-<div class="food-card">
-
-    <img class="food-img"
-    src="https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=800&auto=format&fit=crop">
-
-    <div class="food-info">
-
-        <div>
-            <div class="food-name">腊味煲仔饭</div>
-
-            <div class="food-desc">
-                米饭焦香，腊肠油润入味。
-            </div>
-        </div>
-
-        <div class="food-bottom">
-            <button class="add-btn" onclick="addMenu('腊味煲仔饭')">
-                添加
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- 菜品12 -->
-<div class="food-card">
-
-    <img class="food-img"
-    src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop">
-
-    <div class="food-info">
-
-        <div>
-            <div class="food-name">清蒸鲈鱼</div>
-
-            <div class="food-desc">
-                鲜嫩清甜，粤菜经典蒸鱼。
-            </div>
-        </div>
-
-        <div class="food-bottom">
-            <button class="add-btn" onclick="addMenu('清蒸鲈鱼')">
-                添加
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- 菜品13 -->
-<div class="food-card">
-
-    <img class="food-img"
-    src="https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=800&auto=format&fit=crop">
-
-    <div class="food-info">
-
-        <div>
-            <div class="food-name">云吞面</div>
-
-            <div class="food-desc">
-                鲜虾云吞搭配竹升面，爽口弹牙。
-            </div>
-        </div>
-
-        <div class="food-bottom">
-            <button class="add-btn" onclick="addMenu('云吞面')">
-                添加
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- 菜品14 -->
-<div class="food-card">
-
-    <img class="food-img"
-    src="https://upload.wikimedia.org/wikipedia/commons/0/05/Doraemon_200211.jpg">
-
-    <div class="food-info">
-
-        <div>
-            <div class="food-name">凤爪蒸排骨</div>
-
-            <div class="food-desc">
-                茶楼经典双拼，香软入味。
-            </div>
-        </div>
-
-        <div class="food-bottom">
-            <button class="add-btn" onclick="addMenu('凤爪蒸排骨')">
-                添加
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- 菜品15 -->
-<div class="food-card">
-
-    <img class="food-img"
-    src="https://images.unsplash.com/photo-1516684732162-798a0062be99?q=80&w=800&auto=format&fit=crop">
-
-    <div class="food-info">
-
-        <div>
-            <div class="food-name">杨枝甘露</div>
-
-            <div class="food-desc">
-                芒果香甜，冰爽顺滑超解腻。
-            </div>
-        </div>
-
-        <div class="food-bottom">
-            <button class="add-btn" onclick="addMenu('杨枝甘露')">
-                添加
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-</div>
-
-<!-- 悬浮购物车 -->
 <div class="cart-btn" onclick="openCart()">
 
     🛒
@@ -663,6 +276,7 @@ body{
 </div>
 
 <!-- 购物车弹窗 -->
+
 <div class="cart-popup" id="cartPopup">
 
     <div class="cart-content">
@@ -689,26 +303,190 @@ body{
 
 <script>
 
+/* 100道粤菜 */
+
+const foods = [
+
+"蜜汁叉烧",
+"白切鸡",
+"广式烧鹅",
+"豉汁蒸排骨",
+"干炒牛河",
+"云吞面",
+"艇仔粥",
+"鲜虾肠粉",
+"虾饺皇",
+"凤爪蒸排骨",
+"腊味煲仔饭",
+"清蒸鲈鱼",
+"烧味双拼",
+"陈皮牛肉丸",
+"牛肉肠粉",
+"咸鱼鸡粒炒饭",
+"叉烧包",
+"流沙奶黄包",
+"豉汁凤爪",
+"豉油皇炒面",
+
+"鼓汁蒸凤爪",
+"蚝油生菜",
+"白灼菜心",
+"白灼虾",
+"椒盐濑尿虾",
+"避风塘炒蟹",
+"清蒸多宝鱼",
+"豉汁蒸鱼头",
+"鲍汁扣鹅掌",
+"鲍鱼焖鸡",
+"红烧乳鸽",
+"叉烧炒饭",
+"瑶柱蛋白炒饭",
+"鲜虾云吞",
+"牛腩面",
+"牛三星",
+"猪杂粥",
+"皮蛋瘦肉粥",
+"及第粥",
+"干蒸烧卖",
+
+"马拉糕",
+"萝卜糕",
+"香煎芋头糕",
+"糯米鸡",
+"荷叶饭",
+"咸水角",
+"炸鲜奶",
+"姜撞奶",
+"双皮奶",
+"杨枝甘露",
+"红豆沙",
+"芝麻糊",
+"杏仁茶",
+"椰汁西米露",
+"莲子百合糖水",
+"凤爪排骨饭",
+"豉汁排骨饭",
+"烧鸭饭",
+"烧鹅饭",
+"叉烧饭",
+
+"滑蛋牛肉饭",
+"梅菜扣肉饭",
+"香菇滑鸡饭",
+"咕噜肉",
+"菠萝咕噜肉",
+"蒜蓉蒸扇贝",
+"蒜香骨",
+"蜜椒鸡翅",
+"白灼芥兰",
+"上汤娃娃菜",
+"潮州卤水拼盘",
+"卤水鹅肠",
+"卤水鸭掌",
+"凉拌海蜇",
+"凉瓜炒牛肉",
+"苦瓜排骨汤",
+"老火靓汤",
+"胡椒猪肚鸡",
+"花胶鸡汤",
+"玉米红萝卜排骨汤",
+
+"番茄牛腩",
+"冬瓜盅",
+"咸蛋黄焗南瓜",
+"椒盐豆腐",
+"酿豆腐",
+"客家酿苦瓜",
+"梅菜蒸肉饼",
+"咸鱼蒸肉饼",
+"虾酱啫啫煲",
+"啫啫鸡煲",
+"豉汁炒蚬",
+"炒田螺",
+"香煎马鲛鱼",
+"鱼香茄子煲",
+"豉椒炒牛肉",
+"椒盐九肚鱼",
+"广式腊肠",
+"烧排骨",
+"豉汁凉瓜排骨",
+"豉油鸡"
+
+];
+
+const container = document.getElementById("foodContainer");
+
+/* 渲染菜品 */
+
+foods.forEach(food=>{
+
+    container.innerHTML += `
+
+    <div class="food-card">
+
+        <img class="food-img"
+        src="https://upload.wikimedia.org/wikipedia/commons/0/05/Doraemon_200211.jpg">
+
+        <div class="food-info">
+
+            <div>
+
+                <div class="food-name">
+                    ${food}
+                </div>
+
+                <div class="food-desc">
+                    地道粤式风味，现点现做，欢迎加入今日菜单。
+                </div>
+
+            </div>
+
+            <div class="food-bottom">
+
+                <button class="add-btn"
+                onclick="addMenu('${food}')">
+
+                    添加
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    `;
+
+});
+
+/* 菜单数组 */
+
 let menuArr = [];
 
 const cartItems = document.getElementById("cartItems");
 const cartCount = document.getElementById("cartCount");
 const cartPopup = document.getElementById("cartPopup");
 
-/* 添加菜品 */
+/* 添加 */
+
 function addMenu(name){
 
     if(menuArr.includes(name)){
+
         alert("这个菜已经添加过啦～");
         return;
+
     }
 
     menuArr.push(name);
 
     renderCart();
+
 }
 
 /* 渲染购物车 */
+
 function renderCart(){
 
     cartCount.innerText = menuArr.length;
@@ -716,12 +494,13 @@ function renderCart(){
     if(menuArr.length === 0){
 
         cartItems.innerHTML = `
-            <div class="empty">
-                还没有添加菜品哦～
-            </div>
+        <div class="empty">
+            还没有添加菜品哦～
+        </div>
         `;
 
         return;
+
     }
 
     cartItems.innerHTML = "";
@@ -730,18 +509,18 @@ function renderCart(){
 
         cartItems.innerHTML += `
 
-            <div class="cart-item">
+        <div class="cart-item">
 
-                <span>${item}</span>
+            <span>${item}</span>
 
-                <button class="remove-btn"
-                onclick="removeItem(${index})">
+            <button class="remove-btn"
+            onclick="removeItem(${index})">
 
-                    删除
+                删除
 
-                </button>
+            </button>
 
-            </div>
+        </div>
 
         `;
 
@@ -749,7 +528,8 @@ function renderCart(){
 
 }
 
-/* 删除菜品 */
+/* 删除 */
+
 function removeItem(index){
 
     menuArr.splice(index,1);
@@ -758,30 +538,40 @@ function removeItem(index){
 
 }
 
-/* 打开购物车 */
+/* 打开 */
+
 function openCart(){
 
     cartPopup.style.display = "flex";
 
 }
 
-/* 关闭购物车 */
+/* 关闭 */
+
 function closeCart(){
 
     cartPopup.style.display = "none";
 
 }
 
-/* 搜索功能 */
+/* 搜索 */
+
 function searchFood(){
 
-    let input = document.getElementById("searchInput").value.toLowerCase();
+    let input =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase();
 
-    let cards = document.querySelectorAll(".food-card");
+    let cards =
+    document.querySelectorAll(".food-card");
 
     cards.forEach(card=>{
 
-        let name = card.querySelector(".food-name").innerText.toLowerCase();
+        let name =
+        card.querySelector(".food-name")
+        .innerText
+        .toLowerCase();
 
         if(name.includes(input)){
 
@@ -798,6 +588,7 @@ function searchFood(){
 }
 
 /* 点击空白关闭 */
+
 cartPopup.addEventListener("click",function(e){
 
     if(e.target === cartPopup){
