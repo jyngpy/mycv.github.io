@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>肥挺私房菜</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+    background:#f5f5f5;
+    overflow-x:hidden;
+    color:#333;
+}
+
+/* 顶部 */
+.header{
+    position:sticky;
+    top:0;
+    z-index:99;
+    background:linear-gradient(135deg,#ffcc70,#ff9f43);
+    padding:16px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.shop-title{
+    color:#fff;
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+/* 搜索框 */
+.search-box{
+    background:#fff;
+    border-radius:999px;
+    padding:12px 16px;
+    display:flex;
+    align-items:center;
+}
+
+.search-box input{
+    border:none;
+    outline:none;
+    width:100%;
+    font-size:15px;
+    background:none;
+}
+
+/* 菜品区域 */
+.food-container{
+    padding:14px 12px 100px;
+}
+
+.food-card{
+    display:flex;
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    margin-bottom:14px;
+    box-shadow:0 4px 14px rgba(0,0,0,.06);
+}
+
+.food-img{
+    width:115px;
+    height:115px;
+    object-fit:cover;
+    flex-shrink:0;
+}
+
+.food-info{
+    flex:1;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.food-name{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.food-desc{
+    font-size:13px;
+    color:#777;
+    line-height:1.4;
+}
+
+.food-bottom{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:10px;
+}
+
+.add-btn{
+    border:none;
+    background:linear-gradient(135deg,#ffb347,#ff7b00);
+    color:#fff;
+    padding:10px 16px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.add-btn:active{
+    transform:scale(.96);
+}
+
+/* 悬浮购物车 */
+.cart-btn{
+    position:fixed;
+    right:16px;
+    bottom:26px;
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#ffb347,#ff7b00);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:28px;
+    box-shadow:0 6px 18px rgba(0,0,0,.2);
+    z-index:999;
+}
+
+.cart-count{
+    position:absolute;
+    top:-3px;
+    right:-3px;
+    background:red;
+    color:#fff;
+    font-size:12px;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* 购物车弹窗 */
+.cart-popup{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.45);
+    display:none;
+    align-items:flex-end;
+    z-index:1000;
+}
+
+.cart-content{
+    width:100%;
+    max-height:75%;
+    background:#fff;
+    border-radius:24px 24px 0 0;
+    padding:20px;
+    overflow-y:auto;
+    animation:up .25s ease;
+}
+
+@keyframes up{
+    from{
+        transform:translateY(100%);
+    }
+    to{
+        transform:translateY(0);
+    }
+}
+
+.cart-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:16px;
+}
+
+.cart-item{
+    background:#fff7eb;
+    padding:14px;
+    border-radius:14px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.remove-btn{
+    border:none;
+    background:#ff4d4f;
+    color:#fff;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:12px;
+}
+
+.empty{
+    color:#999;
+    text-align:center;
+    padding:30px 0;
+    font-size:15px;
+}
+
+.close-btn{
+    width:100%;
+    border:none;
+    background:#ff8f1f;
+    color:#fff;
+    padding:14px;
+    border-radius:999px;
+    font-size:16px;
+    margin-top:12px;
+}
+
+@media (max-width:380px){
+
+    .food-img{
+        width:100px;
+        height:100px;
+    }
+
+    .food-name{
+        font-size:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 顶部 -->
+<div class="header">
+
+    <div class="shop-title">
+        🍜 肥挺私房菜
+    </div>
+
+    <!-- 搜索框 -->
+    <div class="search-box">
+        🔍
+        <input type="text" id="searchInput" placeholder="搜索菜品..." onkeyup="searchFood()">
+    </div>
+
+</div>
+
+<!-- 菜品列表 -->
+<div class="food-container" id="foodContainer">
+
+    <!-- 菜品1 -->
+    <div class="food-card">
+
+        <img class="food-img"
+        src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop">
+
+        <div class="food-info">
+
+            <div>
+                <div class="food-name">蜜汁叉烧</div>
+
+                <div class="food-desc">
+                    广式经典烧味，甜香入味，肥瘦均匀。
+                </div>
+            </div>
+
+            <div class="food-bottom">
+                <button class="add-btn" onclick="addMenu('蜜汁叉烧')">
+                    添加
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 菜品2 -->
+    <div class="food-card">
+
+        <img class="food-img"
+        src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800&auto=format&fit=crop">
+
+        <div class="food-info">
+
+            <div>
+                <div class="food-name">豉汁蒸排骨</div>
+
+                <div class="food-desc">
+                    豆豉浓香，排骨鲜嫩多汁。
+                </div>
+            </div>
+
+            <div class="food-bottom">
+                <button class="add-btn" onclick="addMenu('豉汁蒸排骨')">
+                    添加
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 菜品3 -->
+    <div class="food-card">
+
+        <img class="food-img"
+        src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=800&auto=format&fit=crop">
+
+        <div class="food-info">
+
+            <div>
+                <div class="food-name">白切鸡</div>
+
+                <div class="food-desc">
+                    皮滑肉嫩，搭配姜葱酱超香。
+                </div>
+            </div>
+
+            <div class="food-bottom">
+                <button class="add-btn" onclick="addMenu('白切鸡')">
+                    添加
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 菜品4 -->
+    <div class="food-card">
+
+        <img class="food-img"
+        src="https://images.unsplash.com/photo-1576402187878-974f70c890a5?q=80&w=800&auto=format&fit=crop">
+
+        <div class="food-info">
+
+            <div>
+                <div class="food-name">艇仔粥</div>
+
+                <div class="food-desc">
+                    广州传统名粥，鲜香顺滑。
+                </div>
+            </div>
+
+            <div class="food-bottom">
+                <button class="add-btn" onclick="addMenu('艇仔粥')">
+                    添加
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 菜品5 -->
+    <div class="food-card">
+
+        <img class="food-img"
+        src="https://upload.wikimedia.org/wikipedia/commons/0/05/Doraemon_200211.jpg">
+
+        <div class="food-info">
+
+            <div>
+                <div class="food-name">流沙奶黄包</div>
+
+                <div class="food-desc">
+                    暂无菜品图，先让哆啦A梦顶班一下～
+                </div>
+            </div>
+
+            <div class="food-bottom">
+                <button class="add-btn" onclick="addMenu('流沙奶黄包')">
+                    添加
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 悬浮购物车 -->
+<div class="cart-btn" onclick="openCart()">
+
+    🛒
+
+    <div class="cart-count" id="cartCount">
+        0
+    </div>
+
+</div>
+
+<!-- 购物车弹窗 -->
+<div class="cart-popup" id="cartPopup">
+
+    <div class="cart-content">
+
+        <div class="cart-title">
+            📋 今日菜单
+        </div>
+
+        <div id="cartItems">
+
+            <div class="empty">
+                还没有添加菜品哦～
+            </div>
+
+        </div>
+
+        <button class="close-btn" onclick="closeCart()">
+            关闭菜单
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+let menuArr = [];
+
+const cartItems = document.getElementById("cartItems");
+const cartCount = document.getElementById("cartCount");
+const cartPopup = document.getElementById("cartPopup");
+
+/* 添加菜品 */
+function addMenu(name){
+
+    if(menuArr.includes(name)){
+        alert("这个菜已经添加过啦～");
+        return;
+    }
+
+    menuArr.push(name);
+
+    renderCart();
+}
+
+/* 渲染购物车 */
+function renderCart(){
+
+    cartCount.innerText = menuArr.length;
+
+    if(menuArr.length === 0){
+
+        cartItems.innerHTML = `
+            <div class="empty">
+                还没有添加菜品哦～
+            </div>
+        `;
+
+        return;
+    }
+
+    cartItems.innerHTML = "";
+
+    menuArr.forEach((item,index)=>{
+
+        cartItems.innerHTML += `
+
+            <div class="cart-item">
+
+                <span>${item}</span>
+
+                <button class="remove-btn"
+                onclick="removeItem(${index})">
+
+                    删除
+
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+/* 删除菜品 */
+function removeItem(index){
+
+    menuArr.splice(index,1);
+
+    renderCart();
+
+}
+
+/* 打开购物车 */
+function openCart(){
+
+    cartPopup.style.display = "flex";
+
+}
+
+/* 关闭购物车 */
+function closeCart(){
+
+    cartPopup.style.display = "none";
+
+}
+
+/* 搜索功能 */
+function searchFood(){
+
+    let input = document.getElementById("searchInput").value.toLowerCase();
+
+    let cards = document.querySelectorAll(".food-card");
+
+    cards.forEach(card=>{
+
+        let name = card.querySelector(".food-name").innerText.toLowerCase();
+
+        if(name.includes(input)){
+
+            card.style.display = "flex";
+
+        }else{
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+/* 点击空白关闭 */
+cartPopup.addEventListener("click",function(e){
+
+    if(e.target === cartPopup){
+
+        closeCart();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
