@@ -2,604 +2,325 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<title>粤味菜单</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>肥挺私房菜</title>
 <style>
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+    font-family:"Microsoft YaHei",sans-serif;
 }
-
 body{
-    font-family:"PingFang SC","Microsoft YaHei",sans-serif;
     background:#f5f5f5;
-    overflow-x:hidden;
     color:#333;
 }
 
-/* 顶部 */
-
-.header{
+header{
     position:sticky;
     top:0;
     z-index:999;
-    background:linear-gradient(135deg,#ffcc70,#ff9f43);
-    padding:16px;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    background:white;
+    padding:15px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
 }
-
-.shop-title{
-    color:#fff;
-    font-size:24px;
-    font-weight:700;
-    margin-bottom:12px;
+.top-bar{
+    display:flex;
+    gap:12px;
 }
-
-/* 搜索框 */
-
 .search-box{
-    background:#fff;
-    border-radius:999px;
-    padding:12px 16px;
-    display:flex;
-    align-items:center;
-}
-
-.search-box input{
-    border:none;
-    outline:none;
-    width:100%;
-    font-size:15px;
-    background:none;
-}
-
-/* 菜品区域 */
-
-.food-container{
-    padding:14px 12px 100px;
-}
-
-.food-card{
-    display:flex;
-    background:#fff;
-    border-radius:18px;
-    overflow:hidden;
-    margin-bottom:14px;
-    box-shadow:0 4px 14px rgba(0,0,0,.06);
-}
-
-.food-img{
-    width:110px;
-    height:110px;
-    object-fit:cover;
-    flex-shrink:0;
-}
-
-.food-info{
     flex:1;
-    padding:12px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
 }
-
-.food-name{
-    font-size:17px;
-    font-weight:700;
-    margin-bottom:6px;
-}
-
-.food-desc{
-    font-size:13px;
-    color:#777;
-    line-height:1.5;
-}
-
-.food-bottom{
-    display:flex;
-    justify-content:flex-end;
-    margin-top:10px;
-}
-
-.add-btn{
+.search-box input{
+    width:100%;
+    height:45px;
     border:none;
-    background:linear-gradient(135deg,#ffb347,#ff7b00);
-    color:#fff;
-    padding:10px 16px;
-    border-radius:999px;
-    font-size:14px;
-    font-weight:600;
+    background:#f2f2f2;
+    border-radius:14px;
+    padding:0 16px;
+    font-size:15px;
+    outline:none;
 }
-
-.add-btn:active{
-    transform:scale(.96);
-}
-
-/* 购物车 */
-
 .cart-btn{
-    position:fixed;
-    right:16px;
-    bottom:26px;
-    width:64px;
-    height:64px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#ffb347,#ff7b00);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    font-size:30px;
-    box-shadow:0 6px 18px rgba(0,0,0,.2);
-    z-index:999;
-}
-
-.cart-count{
-    position:absolute;
-    top:-3px;
-    right:-3px;
-    background:red;
-    color:#fff;
-    font-size:12px;
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    border:none;
+    background:#ff6b35;
+    color:white;
+    border-radius:14px;
+    padding:0 18px;
+    cursor:pointer;
+    font-size:15px;
     font-weight:bold;
 }
 
-/* 弹窗 */
+.container{
+  padding:20px;
+}
+.category-title{
+  font-size:28px;
+  margin:30px 10px 20px;
+  font-weight:bold;
+  color:#ff6b35;
+}
+.food-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+  gap:15px;
+}
+.card{
+  background:white;
+  border-radius:16px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  transition:0.2s;
+}
+.card:hover{
+  transform:translateY(-3px);
+}
+.food-img{
+  width:100px;
+  height:100px;
+  border-radius:12px;
+  object-fit:cover;
+  flex-shrink:0;
+}
+.food-info{
+  flex:1;
+}
+.food-name{
+  font-size:16px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+.food-price{
+  color:#ff6b35;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+.add-btn{
+  border:none;
+  background:#ff6b35;
+  color:white;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
 
-.cart-popup{
+.cart{
     position:fixed;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.45);
-    display:none;
-    align-items:flex-end;
-    z-index:1000;
-}
-
-.cart-content{
-    width:100%;
-    max-height:75%;
-    background:#fff;
-    border-radius:24px 24px 0 0;
+    right:20px;
+    bottom:20px;
+    width:340px;
+    max-height:500px;
+    overflow:auto;
+    background:white;
+    border-radius:20px;
     padding:20px;
-    overflow-y:auto;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    display:none;
+    z-index:9999;
 }
-
-.cart-title{
-    font-size:22px;
-    font-weight:700;
-    margin-bottom:16px;
-}
-
-.cart-item{
-    background:#fff7eb;
-    padding:14px;
-    border-radius:14px;
-    margin-bottom:10px;
+.cart h2{
+    margin-bottom:15px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
-
+.clear-btn{
+    background:#ff4d4f;
+    color:white;
+    border:none;
+    padding:5px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:12px;
+}
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
 .remove-btn{
     border:none;
     background:#ff4d4f;
-    color:#fff;
-    padding:6px 10px;
-    border-radius:999px;
-    font-size:12px;
+    color:white;
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
 }
-
-.close-btn{
-    width:100%;
-    border:none;
-    background:#ff8f1f;
-    color:#fff;
-    padding:14px;
-    border-radius:999px;
-    font-size:16px;
-    margin-top:12px;
-}
-
 .empty{
     text-align:center;
     color:#999;
     padding:30px 0;
 }
-
-/* 手机适配 */
-
-@media(max-width:380px){
-
-    .food-img{
-        width:95px;
-        height:95px;
-    }
-
-    .food-name{
-        font-size:15px;
-    }
-
+.total-price{
+    margin-top:15px;
+    padding-top:15px;
+    border-top:1px solid #eee;
+    font-size:18px;
+    font-weight:bold;
+    color:#ff6b35;
+    text-align:right;
 }
 
+@media(max-width:768px){
+    .food-grid{
+        grid-template-columns:1fr;
+    }
+    .cart{
+        width:90%;
+        right:5%;
+    }
+}
 </style>
 </head>
 
 <body>
-
-<!-- 顶部 -->
-
-<div class="header">
-
-    <div class="shop-title">
-        🍜 粤味菜单
-    </div>
-
-    <div class="search-box">
-        🔍
-        <input type="text"
-        id="searchInput"
-        placeholder="搜索菜品..."
-        onkeyup="searchFood()">
-    </div>
-
-</div>
-
-<!-- 菜品列表 -->
-
-<div class="food-container" id="foodContainer"></div>
-
-<!-- 购物车 -->
-
-<div class="cart-btn" onclick="openCart()">
-
-    🛒
-
-    <div class="cart-count" id="cartCount">
-        0
-    </div>
-
-</div>
-
-<!-- 购物车弹窗 -->
-
-<div class="cart-popup" id="cartPopup">
-
-    <div class="cart-content">
-
-        <div class="cart-title">
-            📋 今日菜单
+<header>
+    <div class="top-bar">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="搜索菜名...">
         </div>
-
-        <div id="cartItems">
-
-            <div class="empty">
-                还没有添加菜品哦～
-            </div>
-
-        </div>
-
-        <button class="close-btn" onclick="closeCart()">
-            关闭菜单
+        <button class="cart-btn" onclick="toggleCart()">
+            🛒 购物车(<span id="cartCount">0</span>)
         </button>
-
     </div>
+</header>
 
+<div class="container" id="menuContainer"></div>
+
+<div class="cart" id="cart">
+    <h2>
+        🛒 我的购物车
+        <button class="clear-btn" onclick="clearCart()">清空</button>
+    </h2>
+    <div id="cartItems"></div>
+    <div class="total-price" id="totalPrice">合计：¥0</div>
 </div>
 
 <script>
 
-/* 100道粤菜 */
+// ✅✅✅ 全部是【永久有效 + 国内秒开 + 全是美食】图片
+const categoryImages = {
+    "川菜": "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=100&h=100&fit=crop",
+    "粤菜": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=100&h=100&fit=crop",
+    "湘菜": "https://hellorfimg.zcool.cn/provider_image/preview260/2235871719.jpg?w=100&h=100&fit=crop",
+    "东北菜": "https://hellorfimg.zcool.cn/provider_image/preview260/2237935730.jpg?w=100&h=100&fit=crop",
+    "烧烤": "https://hellorfimg.zcool.cn/provider_image/preview260/2235878176.jpg?w=100&h=100&fit=crop",
+    "西餐": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop",
+    "日料": "https://images.unsplash.com/photo-1565192259022-0427b058f372?w=100&h=100&fit=crop",
+    "韩料": "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=100&h=100&fit=crop",
+    "主食": "https://images.unsplash.com/photo-1506085524395-f1ca504d334e?w=100&h=100&fit=crop",
+    "甜品饮品": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop"
+};
 
 const foods = [
-
-"蜜汁叉烧",
-"白切鸡",
-"广式烧鹅",
-"豉汁蒸排骨",
-"干炒牛河",
-"云吞面",
-"艇仔粥",
-"鲜虾肠粉",
-"虾饺皇",
-"凤爪蒸排骨",
-"腊味煲仔饭",
-"清蒸鲈鱼",
-"烧味双拼",
-"陈皮牛肉丸",
-"牛肉肠粉",
-"咸鱼鸡粒炒饭",
-"叉烧包",
-"流沙奶黄包",
-"豉汁凤爪",
-"豉油皇炒面",
-
-"鼓汁蒸凤爪",
-"蚝油生菜",
-"白灼菜心",
-"白灼虾",
-"椒盐濑尿虾",
-"避风塘炒蟹",
-"清蒸多宝鱼",
-"豉汁蒸鱼头",
-"鲍汁扣鹅掌",
-"鲍鱼焖鸡",
-"红烧乳鸽",
-"叉烧炒饭",
-"瑶柱蛋白炒饭",
-"鲜虾云吞",
-"牛腩面",
-"牛三星",
-"猪杂粥",
-"皮蛋瘦肉粥",
-"及第粥",
-"干蒸烧卖",
-
-"马拉糕",
-"萝卜糕",
-"香煎芋头糕",
-"糯米鸡",
-"荷叶饭",
-"咸水角",
-"炸鲜奶",
-"姜撞奶",
-"双皮奶",
-"杨枝甘露",
-"红豆沙",
-"芝麻糊",
-"杏仁茶",
-"椰汁西米露",
-"莲子百合糖水",
-"凤爪排骨饭",
-"豉汁排骨饭",
-"烧鸭饭",
-"烧鹅饭",
-"叉烧饭",
-
-"滑蛋牛肉饭",
-"梅菜扣肉饭",
-"香菇滑鸡饭",
-"咕噜肉",
-"菠萝咕噜肉",
-"蒜蓉蒸扇贝",
-"蒜香骨",
-"蜜椒鸡翅",
-"白灼芥兰",
-"上汤娃娃菜",
-"潮州卤水拼盘",
-"卤水鹅肠",
-"卤水鸭掌",
-"凉拌海蜇",
-"凉瓜炒牛肉",
-"苦瓜排骨汤",
-"老火靓汤",
-"胡椒猪肚鸡",
-"花胶鸡汤",
-"玉米红萝卜排骨汤",
-
-"番茄牛腩",
-"冬瓜盅",
-"咸蛋黄焗南瓜",
-"椒盐豆腐",
-"酿豆腐",
-"客家酿苦瓜",
-"梅菜蒸肉饼",
-"咸鱼蒸肉饼",
-"虾酱啫啫煲",
-"啫啫鸡煲",
-"豉汁炒蚬",
-"炒田螺",
-"香煎马鲛鱼",
-"鱼香茄子煲",
-"豉椒炒牛肉",
-"椒盐九肚鱼",
-"广式腊肠",
-"烧排骨",
-"豉汁凉瓜排骨",
-"豉油鸡"
-
+    {category:"川菜",price:28,items:["宫保鸡丁","鱼香肉丝","麻婆豆腐","水煮牛肉","回锅肉","辣子鸡","毛血旺","夫妻肺片","酸菜鱼","口水鸡","泡椒牛蛙","蒜泥白肉","川北凉粉","干锅肥肠","椒盐排骨","红油抄手","担担面","川味香肠","豆花鱼","香辣虾"]},
+    {category:"粤菜",price:32,items:["白切鸡","烧鹅","叉烧","豉汁排骨","艇仔粥","云吞面","脆皮乳鸽","肠粉","煲仔饭","清蒸鲈鱼","蒜蓉蒸扇贝","蜜汁叉烧包","避风塘炒蟹","牛杂煲","老火靓汤","虾饺","凤爪","杨枝甘露","干炒牛河","咕噜肉"]},
+    {category:"湘菜",price:26,items:["剁椒鱼头","小炒黄牛肉","辣椒炒肉","湘西外婆菜","东安子鸡","湘味香干","口味虾","酱板鸭","铁板牛肉","干锅花菜","农家一碗香","湘西土匪鸭","辣炒腊肉","酸豆角肉末","擂椒皮蛋","剁椒蒸排骨","火焙鱼","香辣牛蛙","蒸腊鱼","血鸭"]},
+    {category:"东北菜",price:24,items:["锅包肉","地三鲜","小鸡炖蘑菇","猪肉炖粉条","杀猪菜","酸菜白肉","溜肉段","东北大拉皮","酱大骨","铁锅炖大鹅","尖椒干豆腐","韭菜盒子","雪绵豆沙","拔丝地瓜","木须肉","葱烧豆腐","大丰收","锅塌豆腐","红肠","东北乱炖"]},
+    {category:"烧烤",price:15,items:["羊肉串","牛肉串","鸡翅","烤茄子","烤韭菜","烤鱿鱼","烤生蚝","烤玉米","烤鸡腿","烤五花肉","烤馒头","烤金针菇","烤土豆片","烤香肠","烤豆皮","烤鸡爪","烤鱼","烤牛蛙","烤排骨","烤大虾"]},
+    {category:"西餐",price:38,items:["牛排","意大利面","披萨","凯撒沙拉","芝士焗饭","炸鸡汉堡","薯条","奶油蘑菇汤","黑椒鸡排","烤鸡","海鲜意面","芝士披萨","培根披萨","炸鱼薯条","芝士汉堡","水果沙拉","鸡肉卷","炸洋葱圈","奶油焗虾","德式香肠"]},
+    {category:"日料",price:36,items:["寿司拼盘","三文鱼刺身","鳗鱼饭","豚骨拉面","天妇罗","章鱼小丸子","照烧鸡排","玉子烧","味噌汤","炸猪排","咖喱饭","牛肉饭","鳗鱼寿司","军舰寿司","手握寿司","日式火锅","寿喜锅","乌冬面","亲子丼","厚蛋烧"]},
+    {category:"韩料",price:30,items:["韩式炸鸡","部队火锅","石锅拌饭","韩式烤肉","泡菜汤","辣炒年糕","冷面","芝士年糕","海鲜饼","参鸡汤","泡菜炒饭","大酱汤","烤五花肉","炸酱面","辣白菜","韩式牛肉锅","芝士炸鸡","烤鳗鱼","米肠","炒杂菜"]},
+    {category:"主食",price:18,items:["扬州炒饭","蛋炒饭","牛肉炒饭","腊味煲仔饭","牛肉拉面","炸酱面","热干面","刀削面","牛杂粉","酸辣粉","螺蛳粉","炒河粉","砂锅米线","鸡丝面","担担面","羊肉泡馍","肉夹馍","馄饨","水饺","小笼包"]},
+    {category:"甜品饮品",price:16,items:["杨枝甘露","双皮奶","芒果布丁","珍珠奶茶","奶盖茶","冰粉","红豆沙","绿豆沙","芝士蛋糕","提拉米苏","水果捞","烧仙草","奶茶","柠檬茶","咖啡","抹茶蛋糕","草莓圣代","巧克力冰淇淋","芋圆","西米露"]}
 ];
 
-const container = document.getElementById("foodContainer");
+const menuContainer = document.getElementById("menuContainer");
+const searchInput = document.getElementById("searchInput");
 
-/* 渲染菜品 */
-
-foods.forEach(food=>{
-
-    container.innerHTML += `
-
-    <div class="food-card">
-
-        <img class="food-img"
-        src="https://upload.wikimedia.org/wikipedia/commons/0/05/Doraemon_200211.jpg">
-
-        <div class="food-info">
-
-            <div>
-
-                <div class="food-name">
-                    ${food}
-                </div>
-
-                <div class="food-desc">
-                    地道粤式风味，现点现做，欢迎加入今日菜单。
-                </div>
-
+function renderFoods(data){
+    menuContainer.innerHTML = "";
+    data.forEach(group=>{
+        const categoryBox = document.createElement("div");
+        const img = categoryImages[group.category] || categoryImages["川菜"];
+        categoryBox.innerHTML = `
+            <div class="category-title">${group.category}</div>
+            <div class="food-grid">
+                ${group.items.map(food=>`
+                    <div class="card">
+                        <img class="food-img" src="${img}">
+                        <div class="food-info">
+                            <div class="food-name">${food}</div>
+                            <div class="food-price">¥${group.price}</div>
+                            <button class="add-btn" onclick="addToCart('${food}',${group.price})">添加</button>
+                        </div>
+                    </div>
+                `).join("")}
             </div>
-
-            <div class="food-bottom">
-
-                <button class="add-btn"
-                onclick="addMenu('${food}')">
-
-                    添加
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    `;
-
-});
-
-/* 菜单数组 */
-
-let menuArr = [];
-
-const cartItems = document.getElementById("cartItems");
-const cartCount = document.getElementById("cartCount");
-const cartPopup = document.getElementById("cartPopup");
-
-/* 添加 */
-
-function addMenu(name){
-
-    if(menuArr.includes(name)){
-
-        alert("这个菜已经添加过啦～");
-        return;
-
-    }
-
-    menuArr.push(name);
-
-    renderCart();
-
-}
-
-/* 渲染购物车 */
-
-function renderCart(){
-
-    cartCount.innerText = menuArr.length;
-
-    if(menuArr.length === 0){
-
-        cartItems.innerHTML = `
-        <div class="empty">
-            还没有添加菜品哦～
-        </div>
         `;
-
-        return;
-
-    }
-
-    cartItems.innerHTML = "";
-
-    menuArr.forEach((item,index)=>{
-
-        cartItems.innerHTML += `
-
-        <div class="cart-item">
-
-            <span>${item}</span>
-
-            <button class="remove-btn"
-            onclick="removeItem(${index})">
-
-                删除
-
-            </button>
-
-        </div>
-
-        `;
-
+        menuContainer.appendChild(categoryBox);
     });
-
 }
 
-/* 删除 */
+renderFoods(foods);
+
+let cart = [];
+
+function addToCart(name,price){
+    cart.push({name,price});
+    updateCart();
+}
 
 function removeItem(index){
-
-    menuArr.splice(index,1);
-
-    renderCart();
-
+    cart.splice(index,1);
+    updateCart();
 }
 
-/* 打开 */
-
-function openCart(){
-
-    cartPopup.style.display = "flex";
-
+function clearCart(){
+    cart = [];
+    updateCart();
 }
 
-/* 关闭 */
+function updateCart(){
+    const count = cart.length;
+    document.getElementById("cartCount").innerText = count;
+    
+    const total = cart.reduce((sum,item)=>sum + item.price,0);
+    document.getElementById("totalPrice").innerText = `合计：¥${total}`;
 
-function closeCart(){
-
-    cartPopup.style.display = "none";
-
-}
-
-/* 搜索 */
-
-function searchFood(){
-
-    let input =
-    document.getElementById("searchInput")
-    .value
-    .toLowerCase();
-
-    let cards =
-    document.querySelectorAll(".food-card");
-
-    cards.forEach(card=>{
-
-        let name =
-        card.querySelector(".food-name")
-        .innerText
-        .toLowerCase();
-
-        if(name.includes(input)){
-
-            card.style.display = "flex";
-
-        }else{
-
-            card.style.display = "none";
-
-        }
-
-    });
-
-}
-
-/* 点击空白关闭 */
-
-cartPopup.addEventListener("click",function(e){
-
-    if(e.target === cartPopup){
-
-        closeCart();
-
+    const cartItems = document.getElementById("cartItems");
+    if(count === 0){
+        cartItems.innerHTML = `<div class="empty">购物车为空</div>`;
+        return;
     }
 
+    cartItems.innerHTML = cart.map((item,index)=>`
+        <div class="cart-item">
+            <span>${item.name} - ¥${item.price}</span>
+            <button class="remove-btn" onclick="removeItem(${index})">删除</button>
+        </div>
+    `).join("");
+}
+
+function toggleCart(){
+    const cart = document.getElementById("cart");
+    cart.style.display = cart.style.display === "block" ? "none" : "block";
+}
+
+searchInput.addEventListener("input",function(){
+    const val = this.value.trim().toLowerCase();
+    if(!val){
+        renderFoods(foods);
+        return;
+    }
+
+    const filtered = foods.map(group=>{
+        return {
+            ...group,
+            items:group.items.filter(item=>item.includes(val))
+        };
+    }).filter(g=>g.items.length);
+
+    renderFoods(filtered);
 });
 
+updateCart();
 </script>
-
 </body>
 </html>
